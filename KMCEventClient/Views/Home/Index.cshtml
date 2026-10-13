@@ -1,0 +1,108 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="container py-5">
+
+    <!-- Hero Section -->
+    <div class="text-center py-5">
+
+        <h1 class="display-4 fw-bold">
+            Welcome to KMC Events
+        </h1>
+
+        <p class="lead text-muted mt-3">
+            Discover, manage and register for events happening in Kandy.
+        </p>
+
+        <div class="mt-4">
+            <a asp-controller="Events"
+               asp-action="Index"
+               class="btn btn-primary btn-lg me-2">
+                📅 Browse Events
+            </a>
+
+            <a asp-controller="Registrations"
+               asp-action="Create"
+               class="btn btn-outline-primary btn-lg">
+                📝 Register for an Event
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Features -->
+    <div class="row g-4 mt-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body p-4">
+                    <div style="font-size:40px;">📅</div>
+
+                    <h4 class="fw-bold mt-3">
+                        Events
+                    </h4>
+
+                    <p class="text-muted">
+                        View and discover upcoming events
+                        happening in Kandy.
+                    </p>
+
+                    <a asp-controller="Events"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        View Events
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body p-4">
+                    <div style="font-size:40px;">👥</div>
+
+                    <h4 class="fw-bold mt-3">
+                        Participants
+                    </h4>
+
+                    <p class="text-muted">
+                        Manage participant information
+                        and registrations.
+                    </p>
+
+                    <a asp-controller="Participants"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Participants
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100 text-center">
+                <div class="card-body p-4">
+                    <div style="font-size:40px;">📝</div>
+
+                    <h4 class="fw-bold mt-3">
+                        Registrations
+                    </h4>
+
+                    <p class="text-muted">
+                        Register for events and manage
+                        event registrations.
+                    </p>
+
+                    <a asp-controller="Registrations"
+                       asp-action="Index"
+                       class="btn btn-primary">
+                        Registrations
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

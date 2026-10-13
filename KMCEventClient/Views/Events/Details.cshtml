@@ -1,0 +1,206 @@
+@model KMCEventClient.Models.Event
+
+@{
+    ViewData["Title"] = "Event Details";
+}
+
+<style>
+    .details-page {
+        padding: 35px 0 50px;
+    }
+
+    .details-header {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .details-icon {
+        font-size: 45px;
+        margin-bottom: 12px;
+    }
+
+    .details-header h1 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .details-header p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .details-card {
+        background: white;
+        border-radius: 22px;
+        padding: 35px;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    .info-item {
+        padding: 20px 0;
+        border-bottom: 1px solid #edf0f5;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 700;
+        color: #495057;
+        margin-bottom: 6px;
+    }
+
+    .info-value {
+        color: #6c757d;
+        font-size: 1.05rem;
+    }
+
+    .info-icon {
+        font-size: 22px;
+        margin-right: 8px;
+    }
+
+    .description-box {
+        background: #f8f9ff;
+        border-radius: 14px;
+        padding: 18px;
+        margin-top: 8px;
+        color: #555;
+        min-height: 70px;
+    }
+
+    .btn-edit {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .btn-back {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    @@media (max-width: 768px) {
+        .details-header {
+            padding: 30px 25px;
+        }
+
+        .details-card {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+<div class="container details-page">
+
+    <!-- Header -->
+    <div class="details-header">
+
+        <div class="details-icon">
+            📅
+        </div>
+
+        <h1>@Model.Title</h1>
+
+        <p>
+            View complete information about this event.
+        </p>
+
+    </div>
+
+
+    <!-- Details Card -->
+    <div class="details-card">
+
+        <div class="info-item">
+
+            <div class="info-label">
+                <span class="info-icon">🕐</span>
+                Start Date & Time
+            </div>
+
+            <div class="info-value">
+                @Model.StartDate.ToString("g")
+            </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                <span class="info-icon">⏰</span>
+                End Date & Time
+            </div>
+
+            <div class="info-value">
+                @(Model.EndDate?.ToString("g") ?? "Not specified")
+            </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                <span class="info-icon">📍</span>
+                Location
+            </div>
+
+            <div class="info-value">
+                @(string.IsNullOrWhiteSpace(Model.Location)
+                    ? "Not specified"
+                    : Model.Location)
+            </div>
+
+        </div>
+
+
+        <div class="info-item">
+
+            <div class="info-label">
+                <span class="info-icon">📝</span>
+                Description
+            </div>
+
+            <div class="description-box">
+                @(string.IsNullOrWhiteSpace(Model.Description)
+                    ? "No description available."
+                    : Model.Description)
+            </div>
+
+        </div>
+
+
+        <!-- Buttons -->
+        <div class="actions">
+
+            <a class="btn btn-outline-secondary btn-back"
+               asp-action="Index">
+                ← Back to Events
+            </a>
+
+            <a class="btn btn-primary btn-edit"
+               asp-action="Edit"
+               asp-route-id="@Model.Id">
+                ✏️ Edit Event
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

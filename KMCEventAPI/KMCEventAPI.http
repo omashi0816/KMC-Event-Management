@@ -1,0 +1,6 @@
+@KMCEventAPI_HostAddress = http://localhost:5004
+
+GET {{KMCEventAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

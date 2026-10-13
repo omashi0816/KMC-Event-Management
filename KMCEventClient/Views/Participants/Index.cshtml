@@ -1,0 +1,251 @@
+@model IEnumerable<KMCEventClient.Models.Participant>
+
+@{
+    ViewData["Title"] = "Participants";
+}
+
+<style>
+    .participants-page {
+        padding: 25px 0 50px;
+    }
+
+    .participants-header {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border-radius: 24px;
+        padding: 45px 35px;
+        margin-bottom: 35px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .participants-header h1 {
+        font-size: 2.6rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .participants-header p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .create-participant-btn {
+        display: inline-block;
+        background: white;
+        color: #0d6efd;
+        text-decoration: none;
+        padding: 11px 22px;
+        border-radius: 25px;
+        font-weight: 600;
+        transition: 0.3s;
+        white-space: nowrap;
+    }
+
+    .create-participant-btn:hover {
+        color: #0d6efd;
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgba(0,0,0,0.15);
+    }
+
+    .participant-card {
+        height: 100%;
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        border: none;
+        box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+        transition: 0.3s ease;
+    }
+
+    .participant-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.13);
+    }
+
+    .participant-card-top {
+        height: 7px;
+        background: linear-gradient(90deg, #0d6efd, #6610f2);
+    }
+
+    .participant-card-body {
+        padding: 25px;
+    }
+
+    .participant-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: #eef4ff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        margin-bottom: 18px;
+    }
+
+    .participant-name {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 18px;
+        word-break: break-word;
+    }
+
+    .participant-info {
+        color: #6c757d;
+        margin-bottom: 10px;
+        font-size: 0.95rem;
+        word-break: break-word;
+    }
+
+    .participant-info strong {
+        color: #343a40;
+    }
+
+    .participant-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+    }
+
+    .participant-actions .btn {
+        border-radius: 20px;
+        padding: 7px 16px;
+        font-size: 0.88rem;
+    }
+
+    .empty-participants {
+        text-align: center;
+        background: #f8f9fa;
+        border-radius: 20px;
+        padding: 60px 20px;
+    }
+
+    .empty-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+
+    .empty-participants h3 {
+        font-weight: 700;
+    }
+
+    @@media (max-width: 768px) {
+        .participants-header {
+            padding: 35px 22px;
+        }
+
+        .participants-header h1 {
+            font-size: 2rem;
+        }
+    }
+</style>
+
+<div class="container participants-page">
+
+    <!-- Header -->
+    <div class="participants-header">
+
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+            <div>
+                <h1>?? Participants</h1>
+
+                <p>
+                    Manage participant information easily and efficiently.
+                </p>
+            </div>
+
+            <a class="create-participant-btn"
+               asp-action="Create">
+                + Add Participant
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Participants -->
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+
+            @foreach (var p in Model)
+            {
+                <div class="col-lg-4 col-md-6">
+
+                    <div class="participant-card">
+
+                        <div class="participant-card-top"></div>
+
+                        <div class="participant-card-body">
+
+                            <div class="participant-icon">
+                                ??
+                            </div>
+
+                            <div class="participant-name">
+                                @p.FullName
+                            </div>
+
+                            <div class="participant-info">
+                                ?? <strong>Email:</strong>
+                                @p.Email
+                            </div>
+
+                            <div class="participant-info">
+                                ?? <strong>Phone:</strong>
+                                @p.Phone
+                            </div>
+
+                            <div class="participant-actions">
+
+                                <a class="btn btn-outline-secondary"
+                                   asp-action="Edit"
+                                   asp-route-id="@p.Id">
+                                    Edit
+                                </a>
+
+                                <a class="btn btn-outline-danger"
+                                   asp-action="Delete"
+                                   asp-route-id="@p.Id">
+                                    Delete
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+    else
+    {
+        <!-- Empty State -->
+        <div class="empty-participants">
+
+            <div class="empty-icon">
+                ??
+            </div>
+
+            <h3>No Participants Found</h3>
+
+            <p class="text-muted">
+                There are currently no participants registered in the system.
+            </p>
+
+            <a asp-action="Create"
+               class="btn btn-primary rounded-pill px-4">
+                Add First Participant
+            </a>
+
+        </div>
+    }
+
+</div>

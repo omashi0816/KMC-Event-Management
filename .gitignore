@@ -1,0 +1,12 @@
+**/bin/\n**/obj/\n.vs/\n.vscode/\n*.user\n*.suo\n.env\n.env.*\n!.env.example\nappsettings.Development.json\n
+**/bin/
+**/obj/
+.vs/
+.vscode/
+*.user
+*.suo
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+appsettings.json

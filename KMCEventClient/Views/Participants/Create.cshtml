@@ -1,0 +1,265 @@
+﻿@model KMCEventClient.Models.Participant
+
+@{
+    ViewData["Title"] = "Create Participant";
+}
+
+<style>
+    .create-page {
+        padding: 40px 0 60px;
+    }
+
+    .create-header {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .header-icon {
+        font-size: 45px;
+        margin-bottom: 10px;
+    }
+
+    .create-header h1 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .create-header p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .form-card {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 22px;
+        padding: 35px;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    .form-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+        color: #6c757d;
+        margin-bottom: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #343a40;
+        margin-bottom: 8px;
+    }
+
+    .form-control {
+        border-radius: 12px;
+        padding: 11px 14px;
+        border: 1px solid #dee2e6;
+        transition: 0.2s;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.12);
+    }
+
+    .input-icon {
+        margin-right: 6px;
+    }
+
+    .btn-create {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 11px 28px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .btn-create:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(13,110,253,0.25);
+    }
+
+    .btn-back {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .form-actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    @@media (max-width: 768px) {
+        .create-header {
+            padding: 30px 25px;
+        }
+
+        .form-card {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+
+<div class="container create-page">
+
+    <!-- Header -->
+    <div class="create-header">
+
+        <div class="header-icon">
+            👤
+        </div>
+
+        <h1>Create Participant</h1>
+
+        <p>
+            Add a new participant to the KMC Event Management System.
+        </p>
+
+    </div>
+
+
+    <!-- Form -->
+    <div class="form-card">
+
+        <h3 class="form-title">
+            Participant Information
+        </h3>
+
+        <p class="form-subtitle">
+            Enter the participant's details below.
+        </p>
+
+
+        <form asp-action="Create" method="post">
+
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(
+                true,
+                "",
+                new { @class = "text-danger mb-3" }
+            )
+
+
+            <!-- First Name -->
+            <div class="form-group">
+
+                <label asp-for="FirstName" class="form-label">
+                    <span class="input-icon">👤</span>
+                    First Name
+                </label>
+
+                <input asp-for="FirstName"
+                       class="form-control"
+                       placeholder="Enter first name" />
+
+                <span asp-validation-for="FirstName"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Last Name -->
+            <div class="form-group">
+
+                <label asp-for="LastName" class="form-label">
+                    <span class="input-icon">👤</span>
+                    Last Name
+                </label>
+
+                <input asp-for="LastName"
+                       class="form-control"
+                       placeholder="Enter last name" />
+
+                <span asp-validation-for="LastName"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Email -->
+            <div class="form-group">
+
+                <label asp-for="Email" class="form-label">
+                    <span class="input-icon">📧</span>
+                    Email Address
+                </label>
+
+                <input asp-for="Email"
+                       class="form-control"
+                       placeholder="Enter email address" />
+
+                <span asp-validation-for="Email"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Phone -->
+            <div class="form-group">
+
+                <label asp-for="Phone" class="form-label">
+                    <span class="input-icon">📱</span>
+                    Phone Number
+                </label>
+
+                <input asp-for="Phone"
+                       class="form-control"
+                       placeholder="Enter phone number" />
+
+                <span asp-validation-for="Phone"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="btn-create">
+                    ✓ Create Participant
+                </button>
+
+                <a class="btn btn-outline-secondary btn-back"
+                   asp-action="Index">
+                    ← Back to Participants
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

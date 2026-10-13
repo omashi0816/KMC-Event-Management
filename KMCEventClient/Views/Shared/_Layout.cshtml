@@ -1,0 +1,513 @@
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>@ViewData["Title"] - KMC Events</title>
+
+    <script type="importmap"></script>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/KMCEventClient.styles.css"
+          asp-append-version="true" />
+
+
+    <style>
+
+        /* ================================
+           GLOBAL
+        ================================= */
+
+        body {
+            background: #f7f9fc;
+            color: #212529;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+
+        /* ================================
+           NAVBAR
+        ================================= */
+
+        .kmc-navbar {
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #e9ecef;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+            padding: 12px 0;
+        }
+
+
+        .kmc-brand {
+            font-size: 1.35rem;
+            font-weight: 750;
+            color: #0d6efd !important;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 11px;
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            color: white;
+            font-size: 20px;
+        }
+
+
+        .kmc-nav-link {
+            color: #495057 !important;
+            font-weight: 500;
+            padding: 9px 13px !important;
+            border-radius: 10px;
+            margin: 0 2px;
+            transition: 0.25s;
+        }
+
+
+        .kmc-nav-link:hover {
+            color: #0d6efd !important;
+            background: #eef4ff;
+        }
+
+
+        .kmc-login {
+            color: #0d6efd !important;
+            font-weight: 600;
+        }
+
+
+        .kmc-register {
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            color: white !important;
+            padding: 8px 18px !important;
+            border-radius: 22px;
+            font-weight: 600;
+            margin-left: 5px;
+        }
+
+
+        .kmc-register:hover {
+            color: white !important;
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(13,110,253,0.25);
+        }
+
+
+        .kmc-dashboard {
+            background: #eef4ff;
+            color: #0d6efd !important;
+            font-weight: 600;
+            border-radius: 20px;
+            padding: 8px 16px !important;
+        }
+
+
+        .kmc-logout {
+            color: #dc3545 !important;
+            font-weight: 500;
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            padding: 9px 13px;
+        }
+
+
+        .kmc-logout:hover {
+            background: #fff1f1;
+            border-radius: 10px;
+        }
+
+
+        /* ================================
+           MAIN CONTENT
+        ================================= */
+
+        .main-content {
+            min-height: calc(100vh - 150px);
+            padding-top: 15px;
+            padding-bottom: 50px;
+        }
+
+
+        /* ================================
+           FOOTER
+        ================================= */
+
+        .kmc-footer {
+            background: #ffffff;
+            border-top: 1px solid #e9ecef;
+            padding: 25px 0;
+            margin-top: 30px;
+        }
+
+
+        .footer-brand {
+            font-weight: 700;
+            color: #0d6efd;
+        }
+
+
+        .footer-text {
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+
+        .footer-link {
+            color: #0d6efd;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================= */
+
+        @@media (max-width: 768px) {
+
+            .kmc-brand {
+                font-size: 1.15rem;
+            }
+
+            .navbar-nav {
+                padding-top: 10px;
+            }
+
+            .kmc-nav-link {
+                margin: 2px 0;
+            }
+
+            .kmc-register {
+                display: inline-block;
+                margin-top: 5px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================================
+         NAVIGATION BAR
+    ================================= -->
+
+    <header>
+
+        <nav class="navbar navbar-expand-lg kmc-navbar">
+
+            <div class="container">
+
+
+                <!-- BRAND -->
+
+                <a class="navbar-brand kmc-brand"
+                   asp-area=""
+                   asp-controller="Home"
+                   asp-action="Index">
+
+                    <span class="brand-icon">
+                        📅
+                    </span>
+
+                    KMC Events
+
+                </a>
+
+
+                <!-- MOBILE MENU -->
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#kmcNavbar"
+                        aria-controls="kmcNavbar"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+
+                <div class="collapse navbar-collapse"
+                     id="kmcNavbar">
+
+
+                    <!-- MAIN LINKS -->
+
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link kmc-nav-link"
+                               asp-controller="Home"
+                               asp-action="Index">
+
+                                🏠 Home
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link kmc-nav-link"
+                               asp-controller="Events"
+                               asp-action="Index">
+
+                                📅 Events
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link kmc-nav-link"
+                               asp-controller="Participants"
+                               asp-action="Index">
+
+                                👥 Participants
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link kmc-nav-link"
+                               asp-controller="Registrations"
+                               asp-action="Index">
+
+                                📝 Registrations
+
+                            </a>
+
+                        </li>
+
+
+                        <li class="nav-item">
+
+                            <a class="nav-link kmc-nav-link"
+                               asp-controller="Home"
+                               asp-action="Privacy">
+
+                                🔒 Privacy
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+
+                    <!-- AUTH LINKS -->
+
+                    <ul class="navbar-nav align-items-lg-center">
+
+                        @{
+
+                            var token =
+                                Context.Session.GetString("JwtToken");
+
+                        }
+
+
+                        @if (string.IsNullOrWhiteSpace(token))
+                        {
+
+                            <!-- LOGIN -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link kmc-nav-link kmc-login"
+                                   asp-controller="Auth"
+                                   asp-action="Login">
+
+                                    Login
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- REGISTER -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link kmc-register"
+                                   asp-controller="Auth"
+                                   asp-action="Register">
+
+                                    Register
+
+                                </a>
+
+                            </li>
+
+                        }
+
+                        else
+                        {
+
+                            <!-- DASHBOARD -->
+
+                            <li class="nav-item">
+
+                                <a class="nav-link kmc-dashboard"
+                                   asp-controller="Dashboard"
+                                   asp-action="Index">
+
+                                    📊 Dashboard
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- LOGOUT -->
+
+                            <li class="nav-item">
+
+                                <form asp-controller="Auth"
+                                      asp-action="Logout"
+                                      method="post"
+                                      class="d-inline">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="kmc-logout">
+
+                                        Logout
+
+                                    </button>
+
+                                </form>
+
+                            </li>
+
+                        }
+
+                    </ul>
+
+                </div>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+
+    <!-- ================================
+         MAIN CONTENT
+    ================================= -->
+
+    <main role="main"
+          class="main-content">
+
+        @RenderBody()
+
+    </main>
+
+
+    <!-- ================================
+         FOOTER
+    ================================= -->
+
+    <footer class="kmc-footer">
+
+        <div class="container">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <p class="footer-text">
+
+                        © 2026
+                        <span class="footer-brand">
+                            KMC Events
+                        </span>
+
+                        — Event Management System
+
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6 text-md-end">
+
+                    <a class="footer-link"
+                       asp-controller="Home"
+                       asp-action="Privacy">
+
+                        Privacy Policy
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+
+    <!-- SCRIPTS -->
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="~/js/site.js"
+            asp-append-version="true">
+    </script>
+
+    @await RenderSectionAsync("Scripts",
+                             required: false)
+
+</body>
+
+</html>

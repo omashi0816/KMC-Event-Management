@@ -1,0 +1,198 @@
+﻿
+@model IEnumerable<KMCEventClient.Models.Event>
+
+@{
+    ViewData["Title"] = "Organizer Dashboard";
+
+    var events = Model?.ToList() ?? new List<KMCEventClient.Models.Event>();
+
+    var organizerName = ViewBag.OrganizerName as string ?? "Organizer";
+    var organizerEmail = ViewBag.OrganizerEmail as string ?? "";
+    var organizerRole = ViewBag.OrganizerRole as string ?? "Organizer";
+
+    var totalEvents = ViewBag.TotalEvents ?? events.Count;
+
+    var upcomingEvents = ViewBag.UpcomingEvents ??
+        events.Count(e => e.Date.Date >= DateTime.Today);
+}
+
+<div class="container py-4">
+
+    <!-- Welcome -->
+    <div class="mb-4">
+        <h1 class="fw-bold">Welcome back, @organizerName 👋</h1>
+        <p class="text-muted">
+            Manage your events and view your event information from here.
+        </p>
+    </div>
+
+    <!-- Organizer Profile -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row align-items-center">
+
+                <div class="col-md-8">
+                    <h4 class="fw-bold mb-3">Organizer Profile</h4>
+
+                    <p class="mb-2">
+                        <strong>Name:</strong>
+                        @organizerName
+                    </p>
+
+                    <p class="mb-2">
+                        <strong>Email:</strong>
+                        @organizerEmail
+                    </p>
+
+                    <p class="mb-0">
+                        <strong>Role:</strong>
+                        <span class="badge bg-primary">
+                            @organizerRole
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                    <div class="rounded-circle bg-primary text-white
+                                d-inline-flex align-items-center justify-content-center"
+                         style="width:80px;height:80px;font-size:32px;">
+                        @organizerName.Substring(0, 1).ToUpper()
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Dashboard Statistics -->
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">My Events</h6>
+                    <h2 class="fw-bold">@totalEvents</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Upcoming Events</h6>
+                    <h2 class="fw-bold">@upcomingEvents</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Role</h6>
+                    <h2 class="fw-bold">@organizerRole</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Create Event -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="fw-bold mb-0">My Events</h3>
+
+        <a class="btn btn-primary"
+           asp-controller="Events"
+           asp-action="Create">
+            + Create New Event
+        </a>
+    </div>
+
+    @if (!events.Any())
+    {
+        <div class="alert alert-info">
+            You have not created any events yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+
+                <thead class="table-dark">
+                    <tr>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Location</th>
+                        <th>Capacity</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    @foreach (var ev in events)
+                    {
+                        <tr>
+
+                            <td class="fw-semibold">
+                                @ev.Title
+                            </td>
+
+                            <td>
+                                @ev.Date.ToString("yyyy-MM-dd")
+                            </td>
+
+                            <td>
+                                @(ev.Time ?? ev.StartDate.ToString("HH:mm"))
+                            </td>
+
+                            <td>
+                                @ev.Type
+                            </td>
+
+                            <td>
+                                @ev.Location
+                            </td>
+
+                            <td>
+                                @ev.Capacity
+                            </td>
+
+                            <td>
+
+                                <a class="btn btn-sm btn-secondary"
+                                   asp-controller="Events"
+                                   asp-action="Details"
+                                   asp-route-id="@ev.EventId">
+                                    Details
+                                </a>
+
+                                <a class="btn btn-sm btn-primary"
+                                   asp-controller="Events"
+                                   asp-action="Edit"
+                                   asp-route-id="@ev.EventId">
+                                    Edit
+                                </a>
+
+                                <a class="btn btn-sm btn-danger"
+                                   asp-controller="Events"
+                                   asp-action="Delete"
+                                   asp-route-id="@ev.EventId">
+                                    Delete
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+        </div>
+    }
+
+</div>
+

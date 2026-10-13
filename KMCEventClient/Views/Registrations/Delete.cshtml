@@ -1,0 +1,182 @@
+﻿@model KMCEventClient.Models.Registration
+
+@{
+    ViewData["Title"] = "Delete Registration";
+}
+
+<style>
+    .delete-page {
+        padding: 45px 0 60px;
+    }
+
+    .delete-card {
+        max-width: 750px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 24px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.10);
+    }
+
+    .warning-icon {
+        width: 85px;
+        height: 85px;
+        margin: 0 auto 20px;
+        border-radius: 50%;
+        background: #fff1f1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 40px;
+    }
+
+    .delete-card h1 {
+        font-weight: 700;
+        color: #dc3545;
+        margin-bottom: 12px;
+    }
+
+    .warning-text {
+        color: #6c757d;
+        margin-bottom: 30px;
+    }
+
+    .registration-box {
+        background: #f8f9fa;
+        border-radius: 18px;
+        padding: 25px;
+        text-align: left;
+        margin-bottom: 30px;
+        border: 1px solid #edf0f2;
+    }
+
+    .event-name {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #212529;
+        margin-bottom: 22px;
+    }
+
+    .registration-info {
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+        color: #555;
+    }
+
+    .registration-info:last-child {
+        border-bottom: none;
+    }
+
+    .info-label {
+        font-weight: 600;
+        color: #343a40;
+        margin-right: 8px;
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .delete-btn {
+        border-radius: 25px;
+        padding: 11px 28px;
+        font-weight: 600;
+    }
+
+    .back-btn {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .danger-note {
+        font-size: 0.9rem;
+        color: #dc3545;
+        margin-top: 20px;
+    }
+
+    @@media (max-width: 768px) {
+        .delete-card {
+            padding: 30px 20px;
+        }
+    }
+</style>
+
+
+<div class="container delete-page">
+
+    <div class="delete-card">
+
+        <!-- Warning Icon -->
+        <div class="warning-icon">
+            ⚠️
+        </div>
+
+        <h1>Delete Registration</h1>
+
+        <p class="warning-text">
+            Are you sure you want to cancel this registration?
+        </p>
+
+
+        <!-- Registration Details -->
+        <div class="registration-box">
+
+            <div class="event-name">
+                📅 @(Model.Event?.Title ?? "Event")
+            </div>
+
+            <div class="registration-info">
+                <span class="info-label">
+                    👤 Participant:
+                </span>
+
+                @(Model.Participant?.FullName ?? "Not available")
+            </div>
+
+            <div class="registration-info">
+                <span class="info-label">
+                    🕒 Registered At:
+                </span>
+
+                @Model.RegistrationDate.ToString("g")
+            </div>
+
+        </div>
+
+
+        <!-- Actions -->
+        <form asp-action="Delete" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="action-buttons">
+
+                <button type="submit"
+                        class="btn btn-danger delete-btn">
+                    🗑️ Cancel Registration
+                </button>
+
+                <a class="btn btn-outline-secondary back-btn"
+                   asp-action="Index">
+                    ← Back to Registrations
+                </a>
+
+            </div>
+
+        </form>
+
+
+        <div class="danger-note">
+            ⚠️ This will permanently remove the registration record.
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,258 @@
+@model KMCEventClient.Models.Registration
+
+@{
+    ViewData["Title"] = "Register Participant";
+}
+
+<style>
+    .registration-page {
+        padding: 40px 0 60px;
+    }
+
+    .registration-header {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border-radius: 24px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+    }
+
+    .header-icon {
+        font-size: 45px;
+        margin-bottom: 10px;
+    }
+
+    .registration-header h1 {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .registration-header p {
+        margin: 0;
+        opacity: 0.9;
+    }
+
+    .form-card {
+        max-width: 800px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 22px;
+        padding: 35px;
+        box-shadow: 0 8px 28px rgba(0,0,0,0.08);
+    }
+
+    .form-title {
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .form-subtitle {
+        color: #6c757d;
+        margin-bottom: 28px;
+    }
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #343a40;
+        margin-bottom: 8px;
+    }
+
+    .form-select {
+        border-radius: 12px;
+        padding: 12px 14px;
+        border: 1px solid #dee2e6;
+        transition: 0.2s;
+    }
+
+    .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.2rem rgba(13,110,253,0.12);
+    }
+
+    .select-icon {
+        margin-right: 6px;
+    }
+
+    .info-box {
+        background: #f8f9fa;
+        border-radius: 15px;
+        padding: 16px 18px;
+        margin-bottom: 25px;
+        color: #6c757d;
+        border: 1px solid #edf0f2;
+    }
+
+    .register-btn {
+        background: linear-gradient(135deg, #0d6efd, #6610f2);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 11px 28px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .register-btn:hover {
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(13,110,253,0.25);
+    }
+
+    .back-btn {
+        border-radius: 25px;
+        padding: 10px 25px;
+        font-weight: 600;
+    }
+
+    .form-actions {
+        margin-top: 30px;
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    @@media (max-width: 768px) {
+        .registration-header {
+            padding: 30px 25px;
+        }
+
+        .form-card {
+            padding: 25px 20px;
+        }
+    }
+</style>
+
+
+<div class="container registration-page">
+
+    <!-- Header -->
+    <div class="registration-header">
+
+        <div class="header-icon">
+            ??
+        </div>
+
+        <h1>Register Participant</h1>
+
+        <p>
+            Register a participant for an available event.
+        </p>
+
+    </div>
+
+
+    <!-- Registration Form -->
+    <div class="form-card">
+
+        <h3 class="form-title">
+            Event Registration
+        </h3>
+
+        <p class="form-subtitle">
+            Select an event and participant to create a registration.
+        </p>
+
+
+        <div class="info-box">
+            ?? Please select the correct event and participant before
+            completing the registration.
+        </div>
+
+
+        <form asp-action="Create" method="post">
+
+            @Html.AntiForgeryToken()
+
+            @Html.ValidationSummary(
+                true,
+                "",
+                new { @class = "text-danger mb-3" }
+            )
+
+
+            <!-- Event -->
+            <div class="form-group">
+
+                <label class="form-label">
+                    <span class="select-icon">??</span>
+                    Event
+                </label>
+
+                <select asp-for="EventId"
+                        class="form-select"
+                        asp-items='@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
+                            (IEnumerable<KMCEventClient.Models.Event>)ViewBag.Events,
+                            "EventId",
+                            "Title"
+                        ))'>
+
+                    <option value="">-- Select an Event --</option>
+
+                </select>
+
+                <span asp-validation-for="EventId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Participant -->
+            <div class="form-group">
+
+                <label class="form-label">
+                    <span class="select-icon">??</span>
+                    Participant
+                </label>
+
+                <select asp-for="ParticipantId"
+                        class="form-select"
+                        asp-items='@(new Microsoft.AspNetCore.Mvc.Rendering.SelectList(
+                            (IEnumerable<KMCEventClient.Models.Participant>)ViewBag.Participants,
+                            "ParticipantId",
+                            "FullName"
+                        ))'>
+
+                    <option value="">-- Select a Participant --</option>
+
+                </select>
+
+                <span asp-validation-for="ParticipantId"
+                      class="text-danger">
+                </span>
+
+            </div>
+
+
+            <!-- Buttons -->
+            <div class="form-actions">
+
+                <button type="submit"
+                        class="register-btn">
+                    ? Register Participant
+                </button>
+
+                <a class="btn btn-outline-secondary back-btn"
+                   asp-action="Index">
+                    ? Back to Registrations
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}
