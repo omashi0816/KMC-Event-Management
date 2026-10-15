@@ -38,24 +38,38 @@ KMC-Event-Management/
 
 ## Project Screenshots
 
-The following images are provided as project references. Their specific screens should be identified from the images.
+The following screenshots demonstrate the main interfaces and API documentation of the KMC Event Management System.
 
-![Project Screenshot 1](screenshots/Screenshot_20260313_131730.png)
+### Home Page
+![Home Page](screenshots/home.png)
 
-![Project Screenshot 2](screenshots/Screenshot_20260520_220837.png)
+### Login Page
+![Login Page](screenshots/Login.png)
 
-![Project Screenshot 3](screenshots/Screenshot_20260520_220903.png)
+### Registration Page
+![Registration Page](screenshots/Register.png)
 
-![Project Screenshot 4](screenshots/Screenshot_20260520_220950.png)
+### Events Page
+![Events Page](screenshots/Events.png)
 
-![Project Screenshot 5](screenshots/Screenshot_20260523_163754.png)
+### Participants Page
+![Participants Page](screenshots/Participants.png)
 
-![Project Screenshot 6](screenshots/Screenshot_20260523_164104.png)
+### Registrations Page
+![Registrations Page](screenshots/Registrations.png)
 
-![Project Screenshot 7](screenshots/Screenshot_20260523_164544.png)
+### Customer Profile
+![Customer Profile](screenshots/customer%20profile.png)
 
-![Project Screenshot 8](screenshots/Screenshot_20260523_164854.png)
+### Privacy Page
+![Privacy Page](screenshots/Privacy.png)
 
+### Swagger API Documentation
+![Swagger API Documentation 1](screenshots/swagger%201.png)
+
+![Swagger API Documentation 2](screenshots/swagger2.png)
+
+![Swagger API Documentation 3](screenshots/swagger3.png)
 ## Getting Started
 
 ### Prerequisites
